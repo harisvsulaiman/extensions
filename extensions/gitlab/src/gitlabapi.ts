@@ -108,6 +108,7 @@ export function jsonDataToMergeRequest(mr: any): MergeRequest {
     sha: mr.sha,
     milestone: mr.milestone ? (mr.milestone as Milestone) : undefined,
     draft: mr.draft,
+    has_conflicts: mr.has_conflicts === true || false,
   };
 }
 
@@ -244,6 +245,7 @@ export class MergeRequest {
   public sha = "";
   public milestone?: Milestone;
   public draft = false;
+  public has_conflicts = false;
 }
 
 export interface TodoGroup {
@@ -267,6 +269,8 @@ export class Todo {
   public project_with_namespace = "";
   public group?: TodoGroup;
   public author?: User = undefined;
+  public created_at = "";
+  public updated_at = "";
 }
 
 export class Project {
@@ -674,6 +678,8 @@ export class GitLab {
         project_with_namespace: issue.project ? issue.project.name_with_namespace : undefined,
         group: issue.group ? (issue.group as TodoGroup) : undefined,
         author: maybeUserFromJson(issue.author),
+        created_at: issue.created_at,
+        updated_at: issue.updated_at,
       }));
     });
 

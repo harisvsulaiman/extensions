@@ -22,6 +22,7 @@ import { getCIJobStatusEmoji } from "./jobs";
 import { useCache } from "../cache";
 import { userIcon } from "./users";
 import { useCachedState } from "@raycast/utils";
+import { CacheActionPanelSection } from "./cache_actions";
 
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types */
 
@@ -388,6 +389,7 @@ export function MRListItem(props: {
   const accessories: List.Item.Accessory[] = [];
   if (!getListDetailsPreference()) {
     accessories.push(
+      { icon: mr.has_conflicts ? "⚠️" : undefined, tooltip: mr.has_conflicts ? "Has Conflict" : undefined },
       { text: mr.milestone?.title },
       { date: new Date(mr.updated_at), tooltip: `Updated: ${toLongDateString(mr.updated_at)}` }
     );
@@ -424,6 +426,7 @@ export function MRListItem(props: {
             <MRItemActions mr={mr} onDataChange={props.refreshData} />
           </ActionPanel.Section>
           <ActionPanel.Section>{props.action ?? props.action}</ActionPanel.Section>
+          <CacheActionPanelSection />
         </ActionPanel>
       }
     />
